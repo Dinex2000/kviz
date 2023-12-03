@@ -1,0 +1,34 @@
+from PIL import Image, ImageDraw,ImageFont
+
+print("Генератор мемов запущен!")
+
+text_type = int(input("Введите 1, если нужен только нижний текст, и 2, если и верхний, и нижний: "))
+
+top_text = ""
+bottom_text = ""
+
+if text_type == 1:
+    bottom_text = input("Введите нижний текст: ")
+elif text_type == 2:
+    top_text = input("Введите верхний текст: ")
+    bottom_text = input("Введите нижний текст: ")
+else:
+    print("Ошибка")
+print(top_text, bottom_text)
+memes =["Кот в очках.png","Кот в ресторане.png"]
+
+print("выберите картинку для мема: ")
+for i in range(len(memes)):
+    print(i, memes[i])
+
+
+Image = Image.open(memes[int(input("Введите номер каотинки: "))])
+width, height = Image.size
+Draw = ImageDraw.Draw(Image)
+
+Font = ImageFont.truetype("arial.ttf", size=70)
+text = Draw.textbbox((0, 0), top_text, Font)
+Draw.text(((width - text[2])/ 2, 10), top_text, font=Font, fill="black")
+Draw.text(((width - text[2]) /2, (height - text[3] - 10 )), bottom_text, font=Font, fill="black")
+
+Image.save("new_meme.jpg")
